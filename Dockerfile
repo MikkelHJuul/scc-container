@@ -1,6 +1,6 @@
 FROM golang as scc-get
 
-ARGS VERSION
+ARG VERSION
 RUN go get -u github.com/boyter/scc@v$VERSION
 
 FROM amd64/alpine
