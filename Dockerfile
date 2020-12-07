@@ -1,8 +1,15 @@
-FROM golang as scc-get
+FROM alpine as scc-get
 
-ARG VERSION
-RUN go get -u github.com/boyter/scc@v$VERSION
+# Install wget + bash
+RUN apk update
+RUN apk add wget
+RUN apk add --no-cache --upgrade bash
 
-FROM amd64/alpine
-COPY --from=scc-get /go/bin/scc /bin/
+# Download scc
+RUN wget https://github.com/boyter/scc/releases/download/v2.13.0/scc-2.13.0-i386-unknown-linux.zip
+RUN unzip ./scc-2.13.0-i386-unknown-linux.zip -d /
+RUN chmod +x /scc
+
+FROM alpine
+COPY --from=scc-get /scc /bin/
 ENTRYPOINT ["scc"]
