@@ -1,4 +1,4 @@
-FROM alpine as scc-get
+FROM golang as scc-get
 
 ENV GOOS=linux \
     GOARCH=amd64 \
